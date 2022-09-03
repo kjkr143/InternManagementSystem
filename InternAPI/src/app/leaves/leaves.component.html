@@ -1,0 +1,67 @@
+<nav class="navbar navbar-light bg-primary">
+    <div class="container-fluid">
+        <h1 style="color: aliceblue;" class="navbar-brand">Intern Crud</h1>
+        <div class="d-flex">
+
+            <button *ngIf="role==='Admin'" type="button" id="add-btn" class="btn btn-success" (click)="clickAddLeaves()" data-bs-toggle="modal" data-bs-target="#exampleModal">Add Intern Leaves</button>
+            <button routerLink="/login" class="btn btn-danger mx-3">Logout</button>
+        </div>
+    </div>
+</nav>
+
+<table class="table mt-3">
+    <thead>
+        <tr>
+            <th scope="col">Intern ID</th>
+            <th scope="col">InternName</th>
+            <th scope="col">StartDate</th>
+            <th scope="col">LastDate</th>
+            <th scope="col">Action</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr *ngFor="let row of internLeavesData">
+            <td>{{row.id}}</td>
+            <td>{{row.internName}}</td>
+            <td>{{row.startDate}}</td>
+            <td>{{row.internHours}}</td>
+            <td>{{row.lastDate}}</td>
+            <td>
+                <button style="color: #fff;" data-bs-toggle="modal" data-bs-target="#exampleModal" class="btn btn-info" (click)="onEdit(row)">Edit</button>
+                <button [disabled]="role==='Intern'" style="color: #fff;" class="btn btn-danger mx-3" (click)="deleteInternLeavesDetail(row)">Delete</button>
+            </td>
+        </tr>
+
+    </tbody>
+</table>
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Intern Leaves Details</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form [formGroup]="formValue">
+                    <div class="mb-3">
+                        <label for="exampleInputEmail1" class="form-label">Intern Name</label>
+                        <input type="text" formControlName="internName" class="form-control" id="internNamelabel">
+                    </div>
+                    <div class="mb-3">
+                        <label for="exampleInputEmail1" class="form-label">start Date</label>
+                        <input type="text" formControlName="startDate" class="form-control" id="CompanyHoursLabel">
+                    </div>
+                    <div class="mb-3">
+                        <label for="exampleInputPassword1" class="form-label">Last Date</label>
+                        <input type="text" formControlName="lastDate" class="form-control" id="InternHoursLabel">
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button id="close" type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                <button type="button" *ngIf="showAdd" (click)="postInternLeavesDetails()" class="btn btn-primary">Add</button>
+                <button type="button" *ngIf="showUpdate" (click)="editInternLeavesDetail()" class="btn btn-primary">Update</button>
+            </div>
+        </div>
+    </div>
+</div>
